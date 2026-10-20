@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#eee5f3"><title>Florir · Minha agenda</title><link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script></head>
+<body>
+  <a class="skip-link" href="#main-content">Ir para a agenda</a>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Florir, início"><span class="flower">✿</span> florir<span class="brand-dot">.</span></a>
+    <p class="brand-sub">AGENDA PESSOAL</p>
+    <div class="profile"><span class="avatar">♡</span><div><strong>Minha agenda</strong><small>Compromissos e tarefas</small></div></div>
+    <p class="nav-label">MEU PLANNER</p>
+    <button class="nav-item active" id="calendar-nav"><span>▦</span> Minha agenda <span class="nav-dot">●</span></button>
+    <button class="nav-item" id="tasks-nav"><span>☑</span> Minhas tarefas</button>
+    <button class="nav-item" id="notes-nav"><span>▤</span> Anotações</button>
+    <button class="nav-item" id="history-nav"><span>↶</span> Histórico e lixeira</button><button class="nav-item" id="shortcuts-nav"><span>⌨</span> Atalhos</button><div class="categories"><p class="nav-label">CATEGORIAS</p><div id="category-filters"></div><button class="clear-filter" id="clear-filter" hidden>Mostrar todas</button></div>
+  </aside>
+  <main id="main-content" tabindex="-1">
+    <header class="topbar"><span>Minha agenda <span class="crumb">/ Planejamento</span></span><span class="today-label" id="today-label"></span></header>
+    <div class="content">
+      <section class="welcome"><div><p class="eyebrow">PLANEJAMENTO MENSAL</p><h1>Minha agenda</h1><p>Gerencie seus compromissos, tarefas e anotações.</p></div><div class="welcome-actions"><button class="secondary" id="undo-last" title="Desfazer a última alteração">↶ Desfazer</button><button class="secondary" id="quick-note">✎ Anotar</button><button class="primary" id="new-event"><span>＋</span> Novo compromisso</button></div></section>
+      <div class="agenda-workspace">
+      <section class="planner" aria-label="Calendário mensal">
+        <div class="view-toolbar"><div class="view-switch" aria-label="Visualização"><button data-view="month" aria-pressed="true">Mês</button><button data-view="week" aria-pressed="false">Semana</button><button data-view="day" aria-pressed="false">Dia</button></div></div><div class="month-tabs" id="month-tabs" aria-label="Selecionar mês"></div>
+        <div class="planner-paper">
+          <div class="calendar-toolbar"><div class="month-heading"><span class="month-icon">▦</span><div><p class="mini-label">CALENDÁRIO</p><h2 id="month-title"></h2></div></div><div class="calendar-controls"><button id="prev-month" class="icon-button" aria-label="Mês anterior">‹</button><button id="go-today" class="today-button">Hoje</button><button id="next-month" class="icon-button" aria-label="Próximo mês">›</button><span class="control-divider"></span><div class="search-box"><label class="search-wrap"><span>⌕</span><input id="search" type="search" maxlength="200" autocomplete="off" placeholder="Buscar compromisso" aria-label="Buscar compromisso" aria-controls="search-results" aria-expanded="false"></label><div id="search-results" class="search-results" role="region" aria-label="Resultados da busca" hidden></div></div></div></div>
+          <div class="weekdays"><span>DOMINGO</span><span>SEGUNDA</span><span>TERÇA</span><span>QUARTA</span><span>QUINTA</span><span>SEXTA</span><span>SÁBADO</span></div>
+          <div id="schedule" class="schedule" hidden></div><div id="calendar" class="calendar" aria-label="Dias do mês"></div>
+          <div class="calendar-bottom"><span id="event-count"></span></div>
+        </div>
+      </section>
+      <aside class="card notes-card notes-workspace" id="notes-panel" aria-label="Painel de anotações">
+        <div class="card-heading"><div><p class="mini-label">BLOCO DE ANOTAÇÕES</p><h2>Anotações</h2></div><span class="note-icon">✎</span></div>
+        <div class="note-tabs" aria-label="Período da anotação"><button id="notes-month" aria-pressed="true">Do mês</button><button id="notes-day" aria-pressed="false">Do dia</button></div>
+        <p id="notes-period" class="notes-period"></p>
+        <label class="sr-only" for="notes" id="notes-label">Anotações do mês</label>
+        <textarea id="notes" maxlength="10000" placeholder="Digite suas anotações…"></textarea>
+        <button class="text-button note-versions" id="note-versions">Ver versões anteriores</button><div class="notes-meta"><span class="notes-save" id="notes-status" role="status">Carregando…</span><span id="notes-length">0 / 10.000</span></div>
+        <button class="primary" id="save-notes" disabled>Salvar anotações</button>
+        <small class="notes-shortcut">Ctrl + Enter para salvar</small>
+        <section class="day-overview"><div class="day-overview-heading"><h3 id="day-title">Compromissos do dia</h3><button id="add-day-event" class="icon-button" aria-label="Adicionar compromisso no dia selecionado">＋</button></div><div id="day-events"></div></section>
+      </aside>
+      </div>
+      <div class="bottom-grid">
+        <section class="card tasks-card" id="tasks-panel"><div class="card-heading"><div><p class="mini-label">TAREFAS</p><h2>Para fazer <span>✓</span></h2></div><span id="task-count" class="count-pill">0 / 0</span></div><form id="task-form"><input name="title" placeholder="Adicionar uma tarefa" aria-label="Nova tarefa" maxlength="200" required><button type="submit" aria-label="Adicionar tarefa">＋</button></form><div id="task-list"></div></section>
+
+      </div>
+    </div>
+  </main>
+  <dialog id="event-dialog"><form id="event-form"><div class="dialog-heading"><div><p class="mini-label">COMPROMISSO</p><h2 id="dialog-title">Novo compromisso</h2></div><button class="icon-button" type="button" id="close-dialog" aria-label="Fechar">×</button></div><input type="hidden" name="id"><label>Título<input name="title" maxlength="120" placeholder="Título do compromisso" required></label><label>Data<input type="date" name="date" required></label><div class="form-row"><label>Início<input type="text" name="start" value="09:00" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="HH:MM" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Informe um horário entre 00:00 e 23:59" aria-describedby="time-hint" required></label><label>Término<input type="text" name="end" value="10:00" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="HH:MM" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Informe um horário entre 00:00 e 23:59" aria-describedby="time-hint" required></label></div><p class="time-hint" id="time-hint">Digite os números do horário. Ex.: 0930 → 09:30.</p><label>Categoria<select name="category"><option value="pessoal">Pessoal</option><option value="trabalho">Trabalho</option><option value="estudos">Estudos</option><option value="saude">Saúde & bem-estar</option></select></label><label>Descrição<textarea name="description" maxlength="3000" rows="3" placeholder="Algum detalhe importante?"></textarea></label><label class="checkbox-label"><input type="checkbox" name="completed"> Compromisso concluído</label><div class="form-row"><label>Repetir<select name="recurrence"><option value="none">Não repetir</option><option value="daily">Todos os dias</option><option value="weekly">Toda semana</option><option value="monthly">Todo mês</option></select></label><label id="repeat-end-label" hidden>Encerrar repetição<select name="repeatEnd"><option value="count">Por quantidade</option><option value="date">Em uma data</option></select></label></div><div class="form-row"><label id="repeat-count-label" hidden>Total de ocorrências<input type="number" name="repeatCount" min="1" max="367" step="1" value="2"><small>Inclui o primeiro compromisso.</small></label><label id="until-label" hidden>Repetir até<input type="date" name="until"></label></div><p class="time-hint" id="series-hint" hidden>Repetições limitadas a um ano. Alterações e exclusões afetam toda a série. Em meses sem o dia escolhido, a ocorrência mensal é pulada.</p><div id="conflict-warning" class="conflict-warning" hidden><p id="conflict-details"></p><label class="checkbox-label"><input type="checkbox" name="allowConflict"> Salvar mesmo com conflito</label></div><p id="form-error" role="alert"></p><div class="dialog-actions"><button id="delete-event" class="danger" type="button" hidden>Excluir</button><button class="primary" type="submit">Salvar compromisso</button></div></form></dialog>
+  <dialog id="history-dialog" aria-labelledby="history-title"><div class="dialog-heading"><div><p class="mini-label">ATIVIDADE DA AGENDA</p><h2 id="history-title">Histórico e lixeira</h2></div><button class="icon-button" id="close-history" aria-label="Fechar histórico">×</button></div><div class="note-tabs"><button id="history-tab" aria-pressed="true">Histórico</button><button id="trash-tab" aria-pressed="false">Lixeira</button></div><p id="history-description">Consulte alterações e desfaça ações sem perder o histórico.</p><div id="history-list"></div><button id="history-more" class="secondary" hidden>Carregar mais</button><p id="history-error" role="alert"></p></dialog>
+  <dialog id="shortcuts-dialog" aria-labelledby="shortcuts-title"><div class="dialog-heading"><h2 id="shortcuts-title">Atalhos de teclado</h2><button class="icon-button" id="close-shortcuts" aria-label="Fechar atalhos">×</button></div><dl class="shortcut-list"><dt>N</dt><dd>Novo compromisso</dd><dt>/</dt><dd>Buscar compromisso</dd><dt>M / S / D</dt><dd>Visão mensal / semanal / diária</dd><dt>Alt + Z</dt><dd>Desfazer última alteração (fora dos campos de texto)</dd><dt>Ctrl + Enter</dt><dd>Salvar anotação</dd><dt>Esc</dt><dd>Fechar janela</dd></dl></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body></html>
